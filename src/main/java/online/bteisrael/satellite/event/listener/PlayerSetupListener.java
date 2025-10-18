@@ -1,17 +1,18 @@
 package online.bteisrael.satellite.event.listener;
 
-import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.Event;
+import net.minestom.server.event.EventNode;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerLoadedEvent;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
+import org.jetbrains.annotations.NotNull;
 
 public class PlayerSetupListener {
 
@@ -19,6 +20,15 @@ public class PlayerSetupListener {
             .collisionRule(TeamsPacket.CollisionRule.NEVER)
             .teamColor(NamedTextColor.GRAY)
             .build();
+
+    public static EventNode<? extends @NotNull Event> getEventNode() {
+        EventNode<@NotNull Event> listenerRoot = EventNode.all("SetupNode");
+
+        listenerRoot.addListener(AsyncPlayerConfigurationEvent.class, PlayerSetupListener::handleConfiguration);
+        listenerRoot.addListener(PlayerLoadedEvent.class, PlayerSetupListener::handleLoaded);
+
+        return listenerRoot;
+    }
 
     public static void handleConfiguration(AsyncPlayerConfigurationEvent event) {
         // TODO: Make Spawning Instance (World) Configurable
