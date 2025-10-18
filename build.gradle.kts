@@ -4,7 +4,9 @@ plugins {
 }
 
 group = "online.bteisrael"
-version = "1.0-SNAPSHOT"
+version = "Alef-2"
+
+var minestomVersion = "2025.09.13-1.21.8"
 
 repositories {
     mavenCentral()
@@ -13,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.minestom:minestom:2025.09.13-1.21.8")
+    implementation("net.minestom:minestom:${minestomVersion}")
 
     implementation("net.buildtheearth.terraminusminus:terraminusminus-core:2.0.0-1.21.4")
     implementation("org.yaml:snakeyaml:2.5")
@@ -27,7 +29,7 @@ dependencies {
     implementation("com.google.guava:guava:33.5.0-jre")
 
     // Testing
-    testImplementation("net.minestom:testing:2025.09.13-1.21.8")
+    testImplementation("net.minestom:testing:${minestomVersion}")
 
     testCompileOnly("org.projectlombok:lombok:1.18.42")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
