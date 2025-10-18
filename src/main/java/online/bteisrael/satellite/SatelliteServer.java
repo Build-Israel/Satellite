@@ -7,10 +7,8 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.LightingChunk;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.world.DimensionType;
-import online.bteisrael.satellite.command.FlyCommand;
-import online.bteisrael.satellite.command.RegenerateChunkCommand;
-import online.bteisrael.satellite.command.SetBlockCommand;
-import online.bteisrael.satellite.command.TeleportCommand;
+import online.bteisrael.satellite.command.*;
+import online.bteisrael.satellite.config.SatelliteConfig;
 import online.bteisrael.satellite.event.SatelliteEvents;
 import online.bteisrael.satellite.util.Namespace;
 import online.bteisrael.satellite.world.TerraGenerator;
@@ -22,6 +20,8 @@ import java.nio.file.Path;
 public class SatelliteServer {
 
     public static final String SATELLITE_NAMESPACE = "satellite";
+    public static final String SATELLITE_VERSION = "Alef-2";
+    public static final String MINESTOM_VERSION = "2025.09.13-1.21.8";
     @Getter
     private static SatelliteServer server;
 
@@ -51,7 +51,7 @@ public class SatelliteServer {
         MinecraftServer.getCommandManager().register(new SetBlockCommand());
         MinecraftServer.getCommandManager().register(new RegenerateChunkCommand());
         MinecraftServer.getCommandManager().register(new FlyCommand());
-
+        MinecraftServer.getCommandManager().register(new VersionCommand());
 
         server.start("127.0.0.1", 25565);
     }
