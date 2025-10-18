@@ -1,0 +1,59 @@
+package online.bteisrael.satellite;
+
+import lombok.Getter;
+import net.minestom.server.Auth;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.instance.LightingChunk;
+import net.minestom.server.registry.RegistryKey;
+import net.minestom.server.world.DimensionType;
+import online.bteisrael.satellite.command.FlyCommand;
+import online.bteisrael.satellite.command.RegenerateChunkCommand;
+import online.bteisrael.satellite.command.SetBlockCommand;
+import online.bteisrael.satellite.command.TeleportCommand;
+import online.bteisrael.satellite.event.SatelliteEvents;
+import online.bteisrael.satellite.util.Namespace;
+import online.bteisrael.satellite.world.TerraGenerator;
+import org.jetbrains.annotations.NotNull;
+
+import java.nio.file.Path;
+
+@Getter
+public class SatelliteServer {
+
+    public static final String SATELLITE_NAMESPACE = "satellite";
+    @Getter
+    private static SatelliteServer server;
+
+    static void main(String[] args) {
+        server = new SatelliteServer();
+    }
+
+    public SatelliteServer() {
+        MinecraftServer server = MinecraftServer.init(new Auth.Online());
+
+        DimensionType dt = DimensionType.builder()
+                .coordinateScale(0.000010165068)
+                .height(4000)
+                .minY(-2000) // -2032
+                .build();
+
+        RegistryKey<@NotNull DimensionType> key = MinecraftServer.getDimensionTypeRegistry().register(Namespace.TERRA_WORLD.asKey(), dt);
+
+        InstanceContainer ic = MinecraftServer.getInstanceManager().createInstanceContainer(key);
+        ic.setChunkSupplier(LightingChunk::new);
+        ic.setGenerator(new TerraGenerator());
+        ic.viewDistance(16);
+
+        SatelliteEvents.hook(MinecraftServer.getGlobalEventHandler());
+
+        MinecraftServer.getCommandManager().register(new TeleportCommand());
+        MinecraftServer.getCommandManager().register(new SetBlockCommand());
+        MinecraftServer.getCommandManager().register(new RegenerateChunkCommand());
+        MinecraftServer.getCommandManager().register(new FlyCommand());
+
+
+        server.start("127.0.0.1", 25565);
+    }
+
+}
