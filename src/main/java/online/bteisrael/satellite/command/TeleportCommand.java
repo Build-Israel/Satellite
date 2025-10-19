@@ -5,6 +5,7 @@ import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
 import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.utils.entity.EntityFinder;
 
@@ -15,9 +16,6 @@ public class TeleportCommand extends Command {
         ArgumentDouble argX = new ArgumentDouble("x");
         ArgumentDouble argY = new ArgumentDouble("y");
         ArgumentDouble argZ = new ArgumentDouble("z");
-
-        ArgumentDouble argYaw = new ArgumentDouble("yaw");
-        ArgumentDouble argPitch = new ArgumentDouble("pitch");
 
         ArgumentEntity destination = new ArgumentEntity("destination").singleEntity(true);
         ArgumentEntity entities = new ArgumentEntity("entities");
@@ -39,5 +37,14 @@ public class TeleportCommand extends Command {
 
             finder.find(sender).forEach(e -> e.teleport(new Pos(x, y, z)));
         }, entities, argX, argY, argZ);
+
+        addSyntax((sender, context) -> {
+            EntityFinder finder = context.get(entities);
+            EntityFinder destinationFinder = context.get(destination);
+
+            Entity desti = destinationFinder.find(sender).getFirst();
+
+            finder.find(sender).forEach(e -> e.teleport(desti.getPosition()));
+        }, entities, destination);
     }
 }
