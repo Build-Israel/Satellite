@@ -1,5 +1,6 @@
 package online.bteisrael.satellite.command;
 
+import net.buildtheearth.terraminusminus.TerraConstants;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -22,7 +23,7 @@ public class VersionCommand extends Command {
                             "built specifically for BTE.\n" +
                             "This server is running on Satellite Version: " + SatelliteServer.SATELLITE_VERSION + "\n" +
                             "Minestom version: " + SatelliteServer.MINESTOM_VERSION + "\n" +
-                            "Terra Minus Minus: 2.0.0-1.21.4" + "\n" +
+                            "Terra Minus Minus: " + TerraConstants.LIB_VERSION + "\n" +
                             "and Minecraft: " + MinecraftServer.VERSION_NAME
                     );
                 }
