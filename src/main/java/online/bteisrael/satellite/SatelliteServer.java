@@ -8,13 +8,10 @@ import net.minestom.server.instance.LightingChunk;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.world.DimensionType;
 import online.bteisrael.satellite.command.*;
-import online.bteisrael.satellite.config.SatelliteConfig;
 import online.bteisrael.satellite.event.SatelliteEvents;
 import online.bteisrael.satellite.util.Namespace;
 import online.bteisrael.satellite.world.TerraGenerator;
 import org.jetbrains.annotations.NotNull;
-
-import java.nio.file.Path;
 
 @Getter
 public class SatelliteServer {
@@ -37,7 +34,7 @@ public class SatelliteServer {
                 .height(4000)
                 .minY(-2000) // -2032
                 .build();
-
+        
         RegistryKey<@NotNull DimensionType> key = MinecraftServer.getDimensionTypeRegistry().register(Namespace.TERRA_WORLD.asKey(), dt);
 
         InstanceContainer ic = MinecraftServer.getInstanceManager().createInstanceContainer(key);
@@ -49,7 +46,6 @@ public class SatelliteServer {
 
         MinecraftServer.getCommandManager().register(new TeleportCommand());
         MinecraftServer.getCommandManager().register(new SetBlockCommand());
-        MinecraftServer.getCommandManager().register(new RegenerateChunkCommand());
         MinecraftServer.getCommandManager().register(new FlyCommand());
         MinecraftServer.getCommandManager().register(new VersionCommand());
 
