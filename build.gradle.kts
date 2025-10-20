@@ -6,7 +6,7 @@ plugins {
 group = "online.bteisrael"
 version = "Alef-2"
 
-var minestomVersion = "2025.09.13-1.21.8"
+var minestomVersion = "2025.10.18-1.21.10"
 
 repositories {
     mavenCentral()
