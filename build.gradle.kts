@@ -1,12 +1,16 @@
+import org.cthing.gradle.plugins.buildconstants.SourceAccess
+
 plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.0"
+    id("org.cthing.build-constants") version "2.1.0"
 }
 
 group = "online.bteisrael"
 version = "Alef-2"
 
 var minestomVersion = "2025.10.18-1.21.10"
+var terraMinusMinusVersion = "2.0.0-1.21.4"
 
 repositories {
     mavenCentral()
@@ -17,7 +21,7 @@ repositories {
 dependencies {
     implementation("net.minestom:minestom:${minestomVersion}")
 
-    implementation("net.buildtheearth.terraminusminus:terraminusminus-core:2.0.0-1.21.4")
+    implementation("net.buildtheearth.terraminusminus:terraminusminus-core:${terraMinusMinusVersion}")
     implementation("org.yaml:snakeyaml:2.5")
 
     implementation("org.tinylog:tinylog-api:2.8.0-M1")
@@ -55,5 +59,12 @@ tasks {
     shadowJar {
         mergeServiceFiles()
         archiveClassifier.set("") // Prevent the -all suffix on the shadowjar file.
+    }
+    generateBuildConstants {
+        classname = "online.bteisrael.satellite.SatelliteConstants"
+        sourceAccess = SourceAccess.PUBLIC
+        additionalConstants.put("SATELLITE_VERSION", version)
+        additionalConstants.put("MINESTOM_VERSION", minestomVersion)
+        additionalConstants.put("TERRA_MINUS_MINUS_VERSION", terraMinusMinusVersion)
     }
 }

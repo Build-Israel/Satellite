@@ -12,13 +12,14 @@ import online.bteisrael.satellite.event.SatelliteEvents;
 import online.bteisrael.satellite.util.Namespace;
 import online.bteisrael.satellite.world.TerraGenerator;
 import org.jetbrains.annotations.NotNull;
+import online.bteisrael.satellite.SatelliteConstants;
 
 @Getter
 public class SatelliteServer {
 
     public static final String SATELLITE_NAMESPACE = "satellite";
-    public static final String SATELLITE_VERSION = "Alef-2";
-    public static final String MINESTOM_VERSION = "2025.10.18-1.21.10";
+    public static final String SATELLITE_VERSION = SatelliteConstants.SATELLITE_VERSION;
+    public static final String MINESTOM_VERSION = SatelliteConstants.MINESTOM_VERSION;
     @Getter
     private static SatelliteServer server;
 
