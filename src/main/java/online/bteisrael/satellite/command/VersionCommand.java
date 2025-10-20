@@ -32,7 +32,7 @@ public class VersionCommand extends Command {
                     sender.sendMessage(Component.text(
                             "No you can't not not has Bukkit, " +
                             "Since Satellite is not a Bukkit-derivative project, " +
-                            "and you cannot have Satellite, either, unless you run and host it yourself").append(
+                            "and you can't has Satellite, either, unless you run and host it yourself ").append(
                                     Component.text("[CLICK HERE]")
                                             .color(NamedTextColor.AQUA)
                                             .clickEvent(ClickEvent.openUrl("https://github.com/Build-Israel/Satellite"))
@@ -43,13 +43,15 @@ public class VersionCommand extends Command {
                     );
                 }
                 case "icanhassatellite" -> {
-                    sender.sendMessage("I don't know if you can has Satellite, " +
+                    sender.sendMessage(Component.text("I don't know if you can has Satellite, " +
                             "but you would need to host it yourself, " +
                             "unless you're a server admin of this server, " +
                             "but if you're not the owner, please request " +
                             "permission from the owner before changing stuff. " +
                             "You can find the Source Code and compiled Executables (Java Archives (JAR)), " +
-                            "at the github link: https://github.com/Build-Israel/Satellite ");
+                            "at the github link: ").append(Component
+                            .text("https://github.com/Build-Israel/Satellite")
+                            .clickEvent(ClickEvent.openUrl("https://github.com/Build-Israel/Satellite"))));
                 }
                 default -> {
                     sender.sendMessage(Component.text("Did you think you Could Outsmart me (NotAMojangDev)?\n" +
