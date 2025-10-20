@@ -6,7 +6,7 @@ import net.minestom.server.instance.generator.Generator;
 
 import java.util.ArrayList;
 
-public class FlatworldGenerator implements Generator {
+public class SuperflatGenerator implements Generator {
 
     private static final ArrayList<Block> DEFAULT_WORLD = new ArrayList<>();
     static {
