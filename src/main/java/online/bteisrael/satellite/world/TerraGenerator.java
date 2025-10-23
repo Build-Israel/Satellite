@@ -2,6 +2,7 @@ package online.bteisrael.satellite.world;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
+import lombok.Getter;
 import net.buildtheearth.terraminusminus.generator.CachedChunkData;
 import net.buildtheearth.terraminusminus.generator.ChunkDataLoader;
 import net.buildtheearth.terraminusminus.generator.EarthGeneratorSettings;
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class TerraGenerator implements Generator {
 
     private final EarthGeneratorSettings generatorSettings;
+    @Getter
     private final GeographicProjection projection;
     private final LoadingCache<@NotNull ChunkPos, @NotNull CompletableFuture<CachedChunkData>> cache;
 
@@ -36,8 +38,8 @@ public class TerraGenerator implements Generator {
         this.generatorSettings = generatorSettings
                 .withProjection(projection);
         // TODO: Make Biomes configurable
-        this.cache = CacheBuilder.newBuilder().
-                expireAfterAccess(5, TimeUnit.MINUTES)
+        this.cache = CacheBuilder.newBuilder()
+                .expireAfterAccess(5, TimeUnit.MINUTES)
                 .softValues()
                 .build(new ChunkDataLoader(this.generatorSettings));
     }
