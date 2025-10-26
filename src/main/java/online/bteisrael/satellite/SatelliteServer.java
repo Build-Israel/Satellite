@@ -49,6 +49,7 @@ public class SatelliteServer {
         MinecraftServer.getCommandManager().register(new SetBlockCommand());
         MinecraftServer.getCommandManager().register(new FlyCommand());
         MinecraftServer.getCommandManager().register(new VersionCommand());
+        MinecraftServer.getCommandManager().register(new StopCommand());
 
         server.start("127.0.0.1", 25565);
     }
