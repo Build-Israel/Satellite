@@ -53,15 +53,17 @@ public class TerraGenerator implements Generator {
             for (int z = 0; z < 16; z++) {
                 int groundY = terraData.groundHeight(x, z);
                 int waterY = terraData.waterHeight(x, z);
+                boolean placeWater = waterY > groundY;
 
                 Pos ground = new Pos(x + chunkStart.blockX(), groundY, z + chunkStart.blockZ());
 
-                if (waterY > groundY) {
-                    for (int i = groundY; i <= waterY; ++i) {
+                if (placeWater) {
+                    for (int i = groundY+1; i <= waterY; ++i) {
                         unit.modifier().setBlock(ground.withY(i), Block.WATER);
                     }
                 }
-                unit.modifier().setBlock(ground.asBlockVec(), waterY > groundY ? Block.DIRT : Block.MOSS_BLOCK);
+                unit.modifier().fill(ground.withY(unit.absoluteStart().y()), ground.add(1, 0, 1), Block.STONE);
+                unit.modifier().setBlock(ground.asBlockVec(), placeWater ? Block.DIRT : Block.MOSS_BLOCK);
             }
         }
     }
