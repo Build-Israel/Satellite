@@ -12,7 +12,6 @@ import online.bteisrael.satellite.event.SatelliteEvents;
 import online.bteisrael.satellite.util.Namespace;
 import online.bteisrael.satellite.world.TerraGenerator;
 import org.jetbrains.annotations.NotNull;
-import online.bteisrael.satellite.SatelliteConstants;
 
 @Getter
 public class SatelliteServer {
@@ -50,6 +49,7 @@ public class SatelliteServer {
         MinecraftServer.getCommandManager().register(new FlyCommand());
         MinecraftServer.getCommandManager().register(new VersionCommand());
         MinecraftServer.getCommandManager().register(new StopCommand());
+        MinecraftServer.getCommandManager().setUnknownCommandCallback(new UnknownCommand());
 
         server.start("127.0.0.1", 25565);
     }
