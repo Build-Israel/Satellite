@@ -33,7 +33,7 @@ public class SatelliteServer {
         DimensionType dt = DimensionType.builder()
                 .coordinateScale(0.000010165068)
                 .height(4000)
-                .minY(-2000) // -2032
+                .minY(-2000)
                 .build();
         
         RegistryKey<@NotNull DimensionType> key = MinecraftServer.getDimensionTypeRegistry().register(Namespace.TERRA_WORLD.asKey(), dt);
