@@ -25,10 +25,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * The Terra World Generator, used to generate a model of the Real World.
  */
+@Getter
 public class TerraGenerator implements Generator {
 
     private final EarthGeneratorSettings generatorSettings;
-    @Getter
     private final GeographicProjection projection;
     private final LoadingCache<@NotNull ChunkPos, @NotNull CompletableFuture<CachedChunkData>> cache;
 
