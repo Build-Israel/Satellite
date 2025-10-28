@@ -14,6 +14,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.generator.GenerationUnit;
 import net.minestom.server.instance.generator.Generator;
+import online.bteisrael.satellite.util.tmm.TerraMinestom;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,6 +22,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The Terra World Generator, used to generate a model of the Real World.
+ */
 public class TerraGenerator implements Generator {
 
     private final EarthGeneratorSettings generatorSettings;
@@ -57,23 +61,42 @@ public class TerraGenerator implements Generator {
 
                 Pos ground = new Pos(x + chunkStart.blockX(), groundY, z + chunkStart.blockZ());
 
-                if (placeWater) {
-                    for (int i = groundY+1; i <= waterY; ++i) {
-                        unit.modifier().setBlock(ground.withY(i), Block.WATER);
-                    }
-                }
-                unit.modifier().fill(ground.withY(unit.absoluteStart().y()), ground.add(1, 0, 1), Block.STONE);
-                unit.modifier().setBlock(ground.asBlockVec(), placeWater ? Block.DIRT : Block.MOSS_BLOCK);
+                // Adding 1, 0, 1 is needed to add for some reason.
+                // My assumption would be because it uses >/<  instead of >=/<= in the loop.
+                // Will submit a PR to Minestom to fix this behavior - NotAMojangDev
+                if (placeWater) unit.modifier().fill(ground, ground.withY(waterY).add(1,0,1), Block.WATER);
+                unit.modifier().fill(ground.withY(unit.absoluteStart().blockY()), ground.add(1, 0, 1), Block.STONE);
+                unit.modifier().setBlock(ground.asBlockVec(), placeWater ? Block.DIRT : this.getSurfaceBlock(terraData, x, z));
+                unit.modifier().fillHeight(unit.absoluteStart().blockY(), unit.absoluteStart().blockY() + 1, Block.BEDROCK);
             }
         }
     }
 
+    /**
+     * get the {@link CachedChunkData} of the chunk corresponding to (chunkX, chunkZ)
+     * @param chunkX the x coordinate of the chunk
+     * @param chunkZ the z coordinate of the chunk
+     * @return the Corresponding {@link CachedChunkData} data
+     */
     public @Nullable CachedChunkData getChunkData(int chunkX, int chunkZ) {
         try {
             return this.cache.get(new ChunkPos(chunkX, chunkZ)).get();
         } catch (ExecutionException | InterruptedException e) {
             return null;
         }
+    }
+
+    /**
+     * Turn x and z coordinates to a Minestom surface block as a Minestom block <br>
+     * TODO: Add configuration
+     * @param data The data to reference
+     * @param x The (chunk relative) x coordinate of the block
+     * @param z The (chunk relative) z coordinate of the block
+     * @return the Minestom {@link Block} corresponding to the Surface block at {x, z}
+     */
+    private Block getSurfaceBlock(@NotNull CachedChunkData data, int x, int z) {
+        Block block = TerraMinestom.toMinestomBlock(data.surfaceBlock(x, z));
+        return block == null ? Block.MOSS_BLOCK : block;
     }
 
 }
