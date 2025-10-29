@@ -121,6 +121,13 @@ public class TerraMinestom {
                 .byId(fromMinestomNamespace(msRegKey.key()));
     }
 
+    /**
+     * Translates internal Terra-- {@link BlockState blockstates} to Minestom's Block.
+     * Conserves nullness.
+     *
+     * @param blockState the Terra-- {@link BlockState}
+     * @return the Minestom {@link Block}
+     */
     @Contract("!null -> !null; null -> null")
     public static @Nullable Block toMinestomBlock(BlockState blockState) {
         if (blockState == null) return null;
@@ -128,12 +135,19 @@ public class TerraMinestom {
         Block block = Block.fromKey(blockIdentifier.namespace + ":" + blockIdentifier.path);
         if (block == null) return null;
         for (Map.Entry<String, BlockPropertyValue> property : blockState.getProperties().entrySet()) {
-            block = block.withProperty(property.getKey(), String.valueOf(property.getValue().getAsBoolean()));
+            block = block.withProperty(property.getKey(), String.valueOf(property.getValue().getAsString()));
         }
 
         return block;
     }
 
+    /**
+     * Translates a Minestom {@link Block} to a Terra-- internal {@link BlockState}.
+     * Conserves nullness.
+     *
+     * @param block the Minestom {@link Block}
+     * @return the Terra-- {@link BlockState}
+     */
     @Contract("!null -> !null; null -> null")
     public static @Nullable BlockState fromMinestomBlock(Block block) {
         if (block == null) return null;
@@ -150,6 +164,16 @@ public class TerraMinestom {
         return blockState.build();
     }
 
+    /**
+     * Takes a String value (of a Minestom Block Property)
+     * and converts it into one of the following types
+     * according to its format:
+     * <br>- Integer
+     * <br>- Boolean
+     * <br>- String
+     * @param value A String representing the value
+     * @return An {@link Object} representing one of the above types
+     */
     @Contract("!null -> !null; null -> null")
     private static Object parseValue(String value) {
         if (value == null) return null;
