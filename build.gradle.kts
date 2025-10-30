@@ -19,11 +19,16 @@ repositories {
 }
 
 dependencies {
+    // Minestom
     implementation("net.minestom:minestom:${minestomVersion}")
 
+    // "Real World" Generator
     implementation("net.buildtheearth.terraminusminus:terraminusminus-core:${terraMinusMinusVersion}")
-    implementation("org.yaml:snakeyaml:2.5")
 
+    // Configuration
+    implementation("org.spongepowered:configurate-hocon:4.2.0")
+
+    // Logger
     implementation("org.tinylog:tinylog-api:2.8.0-M1")
     implementation("org.tinylog:tinylog-impl:2.8.0-M1")
     implementation("org.tinylog:slf4j-tinylog:2.8.0-M1")
