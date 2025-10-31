@@ -9,7 +9,7 @@ plugins {
 group = "online.bteisrael"
 version = "Alef-2"
 
-var minestomVersion = "2025.10.18-1.21.10"
+var minestomVersion = "2025.10.31-1.21.10"
 var terraMinusMinusVersion = "2.0.0-1.21.4"
 
 repositories {
